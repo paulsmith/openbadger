@@ -36,7 +36,7 @@
             ClopenBadger{% if issuer %}: {{ issuer.name }} {{ issuer.org }} {% endif %}</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li {{ page | activize('home') }}><a href="/">Home</a></li>
+              <li {{ page | activize('home') }}><a href="/admin">Home</a></li>
               {% if user %}
                 <li {{ page | activize('configure') }}>
                   <a href="/admin/config">Configure</a>
