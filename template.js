@@ -4,6 +4,7 @@ var util = require('util');
 var env = (new nunjucks.Environment(
   new nunjucks.FileSystemLoader('views')
 ));
+// Don't stringify to 'undefined'
 env.addFilter('undef', function (thing) {
   return thing || '';
 });
