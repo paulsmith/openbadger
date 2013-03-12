@@ -6,12 +6,15 @@ var BadgeInstance = require('../models/badge-instance');
 var Issuer = require('../models/issuer');
 
 var testEmail = 'brian@example.org';
-test.applyFixtures({
-  'issuer': new Issuer({
+
+const ISSUER = new Issuer({
     name: 'Badge Authority',
     org: 'Some Org',
     contact: 'brian@example.org'
-  }),
+});
+
+test.applyFixtures({
+  'issuer': ISSUER,
   'user': new User({
     user: testEmail,
     credit: { link: 5 }
@@ -21,6 +24,7 @@ test.applyFixtures({
     shortname: 'link-basic',
     description: 'For doing links.',
     image: Buffer(128),
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'link', count: 5 }
     ]
@@ -30,6 +34,7 @@ test.applyFixtures({
     shortname: 'link-advanced',
     description: 'For doing links, but like, a lot of them',
     image: Buffer(128),
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'link', count: 15 }
     ]
@@ -39,6 +44,7 @@ test.applyFixtures({
     shortname: 'comment',
     description: 'For doing lots of comments.',
     image: Buffer(128),
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'comment', count: 1 }
     ]

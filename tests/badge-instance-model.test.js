@@ -5,17 +5,20 @@ var Badge = require('../models/badge');
 var Issuer = require('../models/issuer');
 var util = require('../lib/util');
 
-test.applyFixtures({
-  'issuer': new Issuer({
+const ISSUER = new Issuer({
     name: 'Badge Authority',
     org: 'Some Org',
     contact: 'brian@example.org'
-  }),
+});
+
+test.applyFixtures({
+  'issuer': ISSUER,
   'link-basic': new Badge({
     name: 'Link Badge, basic',
     shortname: 'link-basic',
     description: 'For doing links.',
     image: Buffer(128),
+    issuer: ISSUER,
     behaviors: [{ shortname: 'link', count: 5 }]
   }),
   'instance': new BadgeInstance({

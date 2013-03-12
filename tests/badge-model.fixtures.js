@@ -7,17 +7,21 @@ const test = require('./');
 
 const IMAGE = test.asset('sample.png');
 
-module.exports = {
-  'issuer': new Issuer({
+const ISSUER = new Issuer({
     name: 'Badge Authority',
     org: 'Some Org',
     contact: 'brian@example.org'
-  }),
+});
+
+module.exports = {
+  'issuer': ISSUER,
   'link-basic': new Badge({
     name: 'Link Badge, basic',
     shortname: 'link-basic',
     description: 'For doing links.',
     image: IMAGE,
+    issuer: ISSUER,
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'link', count: 5 }
     ]
@@ -27,6 +31,7 @@ module.exports = {
     shortname: 'link-advanced',
     description: 'For doing lots of links.',
     image: IMAGE,
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'link', count: 10 }
     ]
@@ -36,6 +41,7 @@ module.exports = {
     shortname: 'comment',
     description: 'For doing lots of comments.',
     image: IMAGE,
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'comment', count: 5 }
     ]
@@ -45,6 +51,7 @@ module.exports = {
     shortname: 'link-comment',
     description: 'For doing lots of comments and links',
     image: IMAGE,
+    issuer: ISSUER,
     behaviors: [
       { shortname: 'comment', count: 5 },
       { shortname: 'link', count: 5 }
@@ -55,6 +62,7 @@ module.exports = {
     shortname: 'offline-badge',
     description: 'For doing stuff offline',
     image: IMAGE,
+    issuer: ISSUER,
     claimCodes: [
       { code: 'already-claimed', claimedBy: 'brian@example.org' },
       { code: 'never-claim' },
@@ -67,6 +75,7 @@ module.exports = {
     shortname: 'other-offline-badge',
     description: 'For doing more offline stuff',
     image: IMAGE,
+    issuer: ISSUER,
     claimCodes: [
       { code: 'slothstronaut' },
       { code: 'bearstronaut' },
@@ -78,6 +87,7 @@ module.exports = {
     shortname: 'random-badge',
     description: 'For doing random stuff',
     image: IMAGE,
+    issuer: ISSUER,
     claimCodes: []
   }),
   'user': new User({

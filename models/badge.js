@@ -86,6 +86,11 @@ var BadgeSchema = new Schema({
     type: Buffer,
     required: true,
     validate: maxLength('image', 256 * 1024)
+  },
+  issuer: {
+    type: Schema.Types.ObjectId,
+    ref: 'Issuer',
+    required: true
   }
 });
 var Badge = db.model('Badge', BadgeSchema);

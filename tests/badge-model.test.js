@@ -11,7 +11,8 @@ function validBadge() {
     description: 'badge description',
     behaviors: [],
     prerequisites: [],
-    image: test.asset('sample.png')
+    image: test.asset('sample.png'),
+    issuer: fixtures.issuer
   });
 }
 
@@ -32,6 +33,8 @@ test.applyFixtures(fixtures, function () {
         t.notOk(err, 'should not have an error when finding');
         t.ok(result.image, 'should have an image');
         t.same(result.image, expect.image);
+        t.ok(result.issuer, 'should have an issuer');
+        t.same(result.issuer, expect.issuer);
         t.end();
       });
     });
