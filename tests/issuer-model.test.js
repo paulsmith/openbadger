@@ -11,12 +11,15 @@ function validIssuer() {
   });
 }
 
+var badgeFixtures = require('./badge-model.fixtures.js');
+
 test.applyFixtures({
   'testIssuer': new Issuer({
     name: 'Mozilla',
     org: 'Webmaker',
     contact: 'brian@mozillafoundation.org'
-  })
+  }),
+  'testBadge': badgeFixtures['link-basic']
 }, function (fixtures) {
   test('Issuer#validate: everything is cool', function (t) {
     var issuer = validIssuer();
@@ -61,6 +64,36 @@ test.applyFixtures({
         resetEnv();
         t.end();
       })
+    });
+  });
+
+  test('Issuer.populate: populates (empty) array of badges', function(t) {
+    Issuer
+      .findOne()
+      .populate('badges')
+      .exec(function(err, issuer) {
+        t.notOk(err, 'should not have any errors');
+        t.same(issuer.badges.length, 0, 'should be an empty array');
+        t.end();
+      });
+  });
+
+  test('Issuer.populate: saves & populates array of badges', function(t) {
+    var badge = fixtures['testBadge'];
+    var issuer = fixtures['testIssuer'];
+    t.equal(issuer.badges.length, 0, 'badges array should initially be empty');
+    badge.save(function(err) {
+      issuer.badges.push(badge);
+      issuer.save(function(err) {
+        Issuer
+          .findOne()
+          .populate('badges')
+          .exec(function(err, i) {
+            t.equal(i.badges.length, 1, 'badges array should increase by 1');
+            t.equal(i.badges[0].id, badge.id, 'should be badge saved as child');
+            t.end();
+          });
+      });
     });
   });
 

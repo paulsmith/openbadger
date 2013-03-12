@@ -51,6 +51,7 @@ var IssuerSchema = new Schema({
     required: true,
     default: generateRandomSecret
   },
+  badges: [{ type: Schema.Types.ObjectId, ref: 'Badge' }]
 });
 var Issuer = db.model('Issuer', IssuerSchema);
 
