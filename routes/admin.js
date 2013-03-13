@@ -47,6 +47,10 @@ exports.newBehaviorForm = function (req, res) {
 };
 
 exports.badgeIndex = function (req, res) {
+  // User must create first issuer before proceeding
+  if (req.issuers.length === 0) {
+    return res.redirect('/admin/issuer');
+  }
   return res.render('admin/badge-index.html', {
     page: 'home',
     issuers: req.issuers,
