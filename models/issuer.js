@@ -51,6 +51,12 @@ var IssuerSchema = new Schema({
     required: true,
     default: generateRandomSecret
   },
+  shortname: {
+    type: String,
+    trim: true,
+    required: true,
+    unique: true
+  },
   badges: [{ type: Schema.Types.ObjectId, ref: 'Badge' }]
 });
 var Issuer = db.model('Issuer', IssuerSchema);
@@ -67,6 +73,15 @@ IssuerSchema.pre('validate', function defaultSecret(next) {
   this.jwtSecret = generateRandomSecret();
   return next();
 });
+
+// TODO: paulsmith 2013-03-13: DRY up setShortNameDefault (in several files)
+function setShortNameDefault(next) {
+  if (!this.shortname && this.name)
+    this.shortname = util.slugify(this.name);
+  next();
+}
+
+IssuerSchema.pre('validate', setShortNameDefault);
 
 /**
  * Get an object compatible with the `badge.issuer` portion of the
