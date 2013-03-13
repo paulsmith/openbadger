@@ -11,7 +11,7 @@ exports.create = function(req, res) {
   issuer.save(function(err, result) {
     if (err) return res.send(err);
     req.flash('info', 'Issuer ' + issuer.name + ' created');
-    res.redirect('/');
+    res.redirect('/admin');
   });
 };
 
@@ -25,7 +25,7 @@ exports.update = function(req, res) {
   issuer.save(function (err, result) {
     if (err) return res.send(err);
     req.flash('info', 'Issuer ' + issuer.name + ' updated');
-    res.redirect('/');
+    res.redirect('/admin');
   });
 };
 

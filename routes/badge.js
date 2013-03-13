@@ -45,6 +45,7 @@ exports.getUploadedImage = function getUploadedImage(options) {
 
 exports.destroy = function destroy(req, res) {
   var badge = req.badge;
+  // TODO: paulsmith 2013-03-13 remove badge from issuer
   return badge.remove(function (err) {
     if (err)
       return res.send(500, err);
