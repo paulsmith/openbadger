@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% block main %}
+<h2>{{ issuer.name }}</h2>
+
+<dl>
+  <dt>Organization</dt>
+  <dd>{{ issuer.org }}</dd>
+  <dt>Contact</dt>
+  <dd>{{ issuer.contact }}</dd>
+</dl>
+
+<h3>Badges</h3>
+<ul>
+  {% for badge in issuer.badges %}
+  <li><a href="/admin/badge/{{ badge.shortname }}">{{ badge.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

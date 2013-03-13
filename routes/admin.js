@@ -111,13 +111,36 @@ exports.manageClaimCodes = function (req, res) {
   });
 };
 
-exports.configure = function (req, res) {
-  return res.render('admin/config.html', {
-    page: 'configure',
-    issuers: req.issuers,
+/**
+ * Issuers
+ */
+
+exports.newIssuerForm = function (req, res) {
+  return res.render('admin/create-or-edit-issuer.html', {
+    page: 'new-issuer',
     user: req.session.user,
     csrf: req.session._csrf,
+    // TODO: paulsmith 2013-03-13 do we still need this flag?
     issuerCheckExempt: true
+  });
+};
+
+exports.showIssuer = function (req, res) {
+  return res.render('admin/show-issuer.html', {
+    page: 'show-issuer',
+    issuer: req.issuer,
+    user: req.session.user,
+    csrf: req.session._csrf
+  });
+};
+
+exports.editIssuerForm = function (req, res) {
+  return res.render('admin/create-or-edit-issuer.html', {
+    page: 'edit-issuer',
+    editing: true,
+    issuer: req.issuer,
+    user: req.session.user,
+    csrf: req.session._csrf,
   });
 };
 

@@ -6,7 +6,7 @@ var Issuer = require('../models/issuer');
 
 exports.create = function create(req, res, next) {
   var form = req.body;
-  var issuerId = req.form.issuer;
+  var issuerId = form.issuer;
   Issuer.findById(issuerId, function(err, issuer) {
     var badge = new Badge({
       name: form.name,

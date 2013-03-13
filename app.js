@@ -65,13 +65,17 @@ app.configure('production', function () {
 
 /** Routes */
 
-// Issuer configuration
-// --------------------
-app.get('/admin/config', admin.configure);
-app.post('/admin/config', issuer.update);
+// Creating and editing issuers
+// ----------------------------
+
+app.all('/admin/issuer/:shortname*', issuer.findByShortName);
+app.get('/admin/issuer', admin.newIssuerForm);
+app.post('/admin/issuer', issuer.create);
+app.get('/admin/issuer/:shortname', admin.showIssuer);
+app.get('/admin/issuer/:shortname/edit', admin.editIssuerForm);
+app.post('/admin/issuer/:shortname/edit', issuer.update);
 
 app.get('/admin/stats', [stats.monthly], admin.stats);
-
 
 // Badge listing
 // -------------

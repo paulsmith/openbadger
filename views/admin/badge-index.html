@@ -1,9 +1,9 @@
 {% extends "admin/base.html" %}
 {% block main %}
-<h1>Issuers</h1>
+<h1>Issuers (<a href="/admin/issuer">Create a new issuer</a>)</h1>
 {% for issuer in issuers %}
 <ul>
-  <li>{{ issuer.name }}</li>
+  <li><a href="/admin/issuer/{{ issuer.shortname }}">{{ issuer.name }}</a></li>
 </ul>
 {% endfor %}
 
