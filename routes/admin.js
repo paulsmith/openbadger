@@ -8,7 +8,7 @@ exports.login = function (req, res) {
   var path = req.query['path'] || req.body['path'] || '/admin';
   return res.render('admin/login.html', {
     page: 'login',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     issuerCheckExempt: true,
@@ -19,8 +19,8 @@ exports.login = function (req, res) {
 exports.newBadgeForm = function (req, res) {
   return res.render('admin/create-or-edit-badge.html', {
     page: 'new-badge',
-    badge: new Badge,
-    issuer: req.issuer,
+    badge: new Badge(),
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
   });
@@ -31,7 +31,7 @@ exports.editBadgeForm = function (req, res) {
     page: 'edit-badge',
     editing: true,
     badge: req.badge,
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
   });
@@ -40,7 +40,7 @@ exports.editBadgeForm = function (req, res) {
 exports.newBehaviorForm = function (req, res) {
   return res.render('admin/new-behavior.html', {
     page: 'new-behavior',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     badgeShortName: req.query['for']
@@ -50,7 +50,7 @@ exports.newBehaviorForm = function (req, res) {
 exports.badgeIndex = function (req, res) {
   return res.render('admin/badge-index.html', {
     page: 'home',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     badges: req.badges,
@@ -61,7 +61,7 @@ exports.badgeIndex = function (req, res) {
 exports.showBadge = function (req, res) {
   return res.render('admin/show-badge.html', {
     page: 'edit-badge',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     defaultBehavior: req.query['behavior'],
@@ -102,7 +102,7 @@ exports.confirmClaim = function confirmClaim(req, res) {
 exports.manageClaimCodes = function (req, res) {
   return res.render('admin/manage-claim-codes.html', {
     page: 'edit-badge',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     badge: req.badge,
@@ -114,7 +114,7 @@ exports.manageClaimCodes = function (req, res) {
 exports.configure = function (req, res) {
   return res.render('admin/config.html', {
     page: 'configure',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     issuerCheckExempt: true
@@ -124,7 +124,7 @@ exports.configure = function (req, res) {
 exports.showFlushDbForm = function (req, res) {
   return res.render('admin/flush-user-info.html', {
     page: 'flush',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf
   });
@@ -133,7 +133,7 @@ exports.showFlushDbForm = function (req, res) {
 exports.userList = function userList(req, res, next) {
   return res.render('admin/user-list.html', {
     page: 'user-list',
-    issuer: req.issuer,
+    issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
     users: req.users
@@ -143,7 +143,7 @@ exports.userList = function userList(req, res, next) {
 exports.stats = function stats(req, res, next) {
   return res.render('admin/stats.html', {
     page: 'stats',
-    issuer: req.issuer,
+    issuers: req.issuers,
     stats: req.stats,
     user: req.session.user,
     csrf: req.session._csrf,

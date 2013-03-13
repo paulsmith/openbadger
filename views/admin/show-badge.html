@@ -16,6 +16,9 @@
       <img class="badge-image" src="{{ badge.imageDataURI() }}">
     {% endif %}
     <dl>
+      <dt>Issuer</dt>
+      <dd>{{ badge.issuer.name }}</dd>
+
       <dt>Shortname</dt>
       <dd><code>{{ badge.shortname }}</code></dd>
       

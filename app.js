@@ -47,7 +47,7 @@ app.configure(function () {
     ],
     redirectTo: '/login'
   }));
-  app.use(issuer.getIssuerConfig());
+  app.use(issuer.findAll());
   app.use(app.router);
 
   // if we've fallen through the router, it's a 404

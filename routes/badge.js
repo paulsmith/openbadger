@@ -2,18 +2,23 @@ var fs = require('fs');
 var logger = require('../lib/logger');
 var Badge = require('../models/badge');
 var BadgeInstance = require('../models/badge-instance');
+var Issuer = require('../models/issuer');
 
 exports.create = function create(req, res, next) {
   var form = req.body;
-  var badge = new Badge({
-    name: form.name,
-    description: form.description,
-    image: req.imageBuffer,
-    criteria: { content: form.criteria }
-  });
-  badge.save(function (err, result) {
-    if (err) return next(err);
-    return res.redirect('/admin/badge/' + badge.shortname);
+  var issuerId = req.form.issuer;
+  Issuer.findById(issuerId, function(err, issuer) {
+    var badge = new Badge({
+      name: form.name,
+      description: form.description,
+      image: req.imageBuffer,
+      issuer: issuer,
+      criteria: { content: form.criteria }
+    });
+    badge.save(function(err, result) {
+      if (err) return next(err);
+      return res.redirect('/admin/badge/' + badge.shortname);
+    });
   });
 };
 
@@ -53,9 +58,12 @@ exports.update = function update(req, res, next) {
   badge.criteria.content = form.criteria;
   if (imageBuffer)
     badge.image = imageBuffer;
-  badge.save(function (err) {
-    if (err) return next(err);
-    return res.redirect(redirectTo);
+  Issuer.findById(form.issuer, function(err, issuer) {
+    badge.issuer = issuer;
+    badge.save(function(err) {
+      if (err) return next(err);
+      return res.redirect(redirectTo);
+    });
   });
 };
 
@@ -204,20 +212,22 @@ exports.findByShortName = function (options) {
     if (!name && required)
       return res.send(404);
 
-    Badge.findOne({ shortname: name }, function (err, badge) {
-      // #TODO: don't show the error directly
-      if (err)
-        return res.send(500, err);
-      if (!badge && required)
-        return res.send(404);
-      req.badge = badge;
-      return next();
-    });
+    Badge.findOne({ shortname: name })
+      .populate('issuer')
+      .exec(function(err, badge) {
+        // #TODO: don't show the error directly
+        if (err)
+          return res.send(500, err);
+        if (!badge && required)
+          return res.send(404);
+        req.badge = badge;
+        return next();
+      });
   };
 };
 
 exports.findAll = function findAll(req, res, next) {
-  Badge.find({}, function (err, badges) {
+  Badge.find().populate('issuer').exec(function(err, badges) {
     if (err) return next(err)
     req.badges = badges;
     return next();
@@ -231,7 +241,7 @@ exports.findNonOffline = function findNonOffline(req, res, next) {
       {claimCodes: {'$size': 0 }}
     ]
   };
-  Badge.find(query, function (err, badges) {
+  Badge.find(query).populate('issuer').exec(function (err, badges) {
     if (err) return next(err);
     req.badges = badges;
     return next();

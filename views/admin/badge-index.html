@@ -1,7 +1,15 @@
 {% extends "admin/base.html" %}
 {% block main %}
+<h1>Issuers</h1>
+{% for issuer in issuers %}
+<ul>
+  <li>{{ issuer.name }}</li>
+</ul>
+{% endfor %}
+
 <h1>Badges (<a href="/admin/badge">Create a new badge</a>)</h1>
 <ul class="badge-list">
+{# TODO: group by issuer #}
 {% for badge in badges %}
   <li>
     <form method="post" action="/admin/badge/{{ badge.shortname }}" class="remove-form js-remove-badge">
@@ -13,6 +21,7 @@
         {{ badge.name }}</a>
       
       (<code>{{ badge.shortname }}</code>)
+      <br>{{ badge.issuer.name }}
       <br>{{ badge.description | stupidSafe }}
       
       <br>

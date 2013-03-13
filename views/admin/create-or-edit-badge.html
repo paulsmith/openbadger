@@ -11,6 +11,17 @@
         New Badge
       {% endif %}
     </legend>
+
+    <div>
+      <label for="issuer">Issuer</label>
+      <select id="issuer" name="issuer" required>
+        <option value="">Select an issuer</option>
+        {% for issuer in issuers %}
+        <option value="{{ issuer.id }}"{% if badge.issuer and badge.issuer.id == issuer.id %} selected{% endif %}>{{ issuer.name }}</option>
+        {% endfor %}
+      </select>
+      <a href="#">+ Add new issuer</a>
+    </div>
     
     <div>
       {{ badge | imageForBadge }}

@@ -15,21 +15,14 @@ exports.update = function update(req, res) {
   });
 };
 
-
-/**
- * (Middleware) Get issuer configuration.
- */
-
-exports.getIssuerConfig = function getIssuerConfig() {
-  return function (req, res, next) {
-    Issuer.findOne(function (err, issuer) {
-      // #TODO: log/report this better.
-      if (err) {
-        err.from = 'getIssuerConfig middleware';
-        return res.send(err);
-      }
-      req.issuer = issuer;
-      return next();
+// Middleware that populates a `issuers' array property on the request object
+exports.findAll = function() {
+  return function(req, res, next) {
+    Issuer.find(function (err, issuers) {
+      if (err) return next(err);
+      req.issuers = issuers;
+      console.log(issuers);
+      next();
     });
-  }
+  };
 };
