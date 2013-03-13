@@ -11,7 +11,6 @@ exports.login = function (req, res) {
     issuers: req.issuers,
     user: req.session.user,
     csrf: req.session._csrf,
-    issuerCheckExempt: true,
     path: path
   });
 }
@@ -119,9 +118,7 @@ exports.newIssuerForm = function (req, res) {
   return res.render('admin/create-or-edit-issuer.html', {
     page: 'new-issuer',
     user: req.session.user,
-    csrf: req.session._csrf,
-    // TODO: paulsmith 2013-03-13 do we still need this flag?
-    issuerCheckExempt: true
+    csrf: req.session._csrf
   });
 };
 
