@@ -17,7 +17,7 @@
     {% endif %}
     <dl>
       <dt>Issuer</dt>
-      <dd>{{ badge.issuer.name }}</dd>
+      <dd><a href="/admin/issuer/{{ badge.issuer.shortname }}">{{ badge.issuer.name }}</a></dd>
 
       <dt>Shortname</dt>
       <dd><code>{{ badge.shortname }}</code></dd>

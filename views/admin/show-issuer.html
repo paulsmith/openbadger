@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 {% block main %}
-<h2>{{ issuer.name }}</h2>
+<h2>{{ issuer.name }} (<a href="/admin/issuer/{{ issuer.shortname }}/edit">Edit</a>)</h2>
 
 <dl>
   <dt>Organization</dt>
