@@ -4,7 +4,7 @@ var Badge = require('../models/badge');
 var BadgeInstance = require('../models/badge-instance');
 var Issuer = require('../models/issuer');
 
-exports.create = function create(req, res, next) {
+exports.create = function(req, res, next) {
   var form = req.body;
   var issuerId = form.issuer;
   Issuer.findById(issuerId, function(err, issuer) {
@@ -15,9 +15,13 @@ exports.create = function create(req, res, next) {
       issuer: issuer,
       criteria: { content: form.criteria }
     });
-    badge.save(function(err, result) {
+    issuer.badges.push(badge);
+    badge.save(function(err) {
       if (err) return next(err);
-      return res.redirect('/admin/badge/' + badge.shortname);
+      issuer.save(function(err) {
+        if (err) return next(err);
+        return res.redirect('/admin/badge/' + badge.shortname);
+      });
     });
   });
 };
